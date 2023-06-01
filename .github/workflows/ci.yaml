@@ -1,33 +1,29 @@
-name: Java CI
+name: Java CI with Gradle
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   pull_request:
-    branches: [ main ]
+    branches: ["main"]
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Run the linter for source code
-        run: ./gradlew :app:checkstyleMain
-
-      - name: Run the linter for tests
-        run: ./gradlew :app:checkstyleTest
-
-      - name: Run test suite
-        run: ./gradlew test
-
-      - name: Build with Gradle wrapper
-        run: ./gradlew build
+          java-version: "17"
+          distribution: "temurin"
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: "8.1.1"
+          arguments: build
+      - name: Run Checkstyle with filter
+        uses: iwata-n/actions-checkstyle@v1.0.0
