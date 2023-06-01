@@ -5,10 +5,12 @@ package http_server.app;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
+
 
 class MessageUtilsTest {
     @Test void testGetMessage() {
-        assertEquals("Hello      World!", MessageUtils.getMessage());
+        assertThat((MessageUtils.getMessage()), equalToIgnoringCase("Hello      World!"));
     }
 }

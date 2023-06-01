@@ -9,6 +9,8 @@ plugins {
 dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':utilities')
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+
 }
 
 application {

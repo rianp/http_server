@@ -24,3 +24,9 @@ gradle build
 ```bash
 gradle run
 ```
+
+## Running HTTP Server Tests
+**To run the HTTP Server tests, execute the following command:**
+```bash
+gradle test
+```
