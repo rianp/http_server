@@ -13,4 +13,4 @@ plugins {
 }
 
 rootProject.name = 'http_server'
-include('app', 'client', 'utilities')
+include('app')
