@@ -11,7 +11,7 @@ public class App {
         Console console = new Console();
         SocketIO socketIO = new SocketIO();
 
-        HttpServer server = new HttpServer(console, socketIO,8080);
+        HttpServer server = new HttpServer(console, socketIO,5000);
         server.start();
     }
 }

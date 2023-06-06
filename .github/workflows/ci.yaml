@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew build
 
       - name: Run server in background
-        run: java -jar build/libs/http-server.jar &
+        run: java -jar build/libs/app.jar &
 
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@2b019609e2b0f1ea1a2bc8ca11cb82ab46ada124
