@@ -26,7 +26,7 @@ public class RouterTest {
     HelloWorld expectedBody = new HelloWorld();
     String expectedResponse = expectedBody.getHelloWorld();
 
-    String response = router.handleRequest(request);
+    String response = router.routeRequest(request);
 
     assertThat(response, is(equalTo(expectedResponse)));
   }
@@ -36,7 +36,7 @@ public class RouterTest {
   void should_NotRoute_When_RequestingUnknownPath() {
     Request request = Mockito.mock(Request.class);
     when(request.getPath()).thenReturn("/unknown_path");
-    String response = router.handleRequest(request);
+    String response = router.routeRequest(request);
 
     assertThat(response, emptyString());
   }

@@ -20,7 +20,7 @@ public class ClientHandler implements Runnable {
       String request = socketIO.readRequest(client);
 
       Request httpRequest = new Request(request);
-      String responseBody = router.handleRequest(httpRequest);
+      String responseBody = router.routeRequest(httpRequest);
 
       String response = "HTTP/1.1 200 OK\r\n\r\n" + responseBody;
       socketIO.sendMessage(client, response);
