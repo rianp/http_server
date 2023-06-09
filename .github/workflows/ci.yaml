@@ -44,6 +44,6 @@ jobs:
 
       - name: Run Spinach acceptance tests
         run: |
-          cd http_server_spec
+          cd http-server-spec
           bundle install
           rake test:implemented
