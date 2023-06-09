@@ -9,14 +9,6 @@ public class Request {
     this.path = extractPath(request);
   }
 
-  public String getBody() {
-    String[] requestParts = request.split("\\r\\n\\r\\n", 2);
-    if (requestParts.length > 1) {
-      return requestParts[1];
-    }
-    return "";
-  }
-
   public String getPath() {
     return path;
   }
