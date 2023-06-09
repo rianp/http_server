@@ -24,6 +24,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
 
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -45,3 +46,5 @@ tasks.named('test') {
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
+
+
