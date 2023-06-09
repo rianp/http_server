@@ -44,7 +44,7 @@ jobs:
 
       - name: Run Spinach acceptance tests
         run: |
-          gradle run
+          gradle run & sleep 10
           cd http-server-spec
           bundle install
           rake test:implemented
