@@ -1,6 +1,6 @@
 package http_server;
 
-import http_server.routes.HelloWorld;
+import http_server.routes.SimpleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +23,8 @@ public class RouterTest {
   void should_RouteToSimpleBodyFile_When_RequestingSimpleGetWithBody() {
     Request request = Mockito.mock(Request.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
-    HelloWorld expectedBody = new HelloWorld();
-    String expectedResponse = expectedBody.getHelloWorld();
+    SimpleResponse expectedBody = new SimpleResponse("Hello World");
+    String expectedResponse = expectedBody.getResponse();
 
     String response = router.routeRequest(request);
 

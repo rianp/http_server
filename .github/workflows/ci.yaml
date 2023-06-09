@@ -47,4 +47,4 @@ jobs:
           cd http_server_spec
           bundle install
           rake test:implemented
-        working-directory: path/to/http_server_spec
+        working-directory: http_server/http_server_spec

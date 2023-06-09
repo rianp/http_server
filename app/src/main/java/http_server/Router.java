@@ -1,12 +1,12 @@
 package http_server;
-import http_server.routes.HelloWorld;
+import http_server.routes.SimpleResponse;
 
 public class Router {
 
   public String routeRequest(Request request) {
     if ("/simple_get_with_body".equals(request.getPath())) {
-      HelloWorld body = new HelloWorld();
-      return body.getHelloWorld();
+      SimpleResponse body = new SimpleResponse("Hello World");
+      return body.getResponse();
     }
 
     return "";
