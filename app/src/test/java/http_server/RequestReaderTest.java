@@ -8,14 +8,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RequestTest {
-  private Request request;
+  private RequestReader request;
 
   @BeforeEach
   public void setUp() {
     String sampleRequest = "GET /example/path HTTP/1.1\r\n" +
         "Host: www.example.com\r\n" +
         "Connection: keep-alive\r\n\r\n";
-    request = new Request(sampleRequest);
+    request = new RequestReader(sampleRequest);
   }
 
   @Test
