@@ -3,18 +3,17 @@ package http_server;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Request {
+public class RequestReader {
   private final SocketIO socketIO;
-  private Path path;
-  private Method method;
+  private String path;
   private HashMap<String, String> headers;
   private String body;
 
-  public Request(SocketIO socketIO) {
+  public RequestReader(SocketIO socketIO) {
     this.socketIO = socketIO;
   }
 
-  public Path getPath() {
+  public String getPath() {
     return path;
   }
 
@@ -27,7 +26,6 @@ public class Request {
 
     if (!rawRequest.isBlank()) {
       RequestParser parser = new RequestParser(rawRequest);
-      method = parser.method();
       path = parser.path();
       headers = parser.headers();
 
@@ -46,7 +44,7 @@ public class Request {
     while ((line = socketIO.readLine()) != null) {
       request.append(line).append("\r\n");
 
-      if (line.isBlank()) {
+      if (line.isEmpty()) {
         break;
       }
     }
@@ -56,5 +54,9 @@ public class Request {
 
   private String getRequestBody(int length) throws IOException {
     return socketIO.readBytes(length);
+  }
+
+  public HashMap<String, String> getHeaders() {
+    return headers;
   }
 }

@@ -1,30 +1,76 @@
 package http_server;
 
+import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 
-public class RequestTest {
-  private RequestReader request;
+public class RequestReaderTest {
+  @Mock
+  private SocketIO socketIO;
+
+  private RequestReader requestReader;
 
   @BeforeEach
-  public void setUp() {
-    String sampleRequest = "GET /example/path HTTP/1.1\r\n" +
-        "Host: www.example.com\r\n" +
-        "Connection: keep-alive\r\n\r\n";
-    request = new RequestReader(sampleRequest);
+  public void setup() {
+    MockitoAnnotations.openMocks(this);
+    requestReader = new RequestReader(socketIO);
   }
 
   @Test
-  @DisplayName("should return the path asked for when a user inputs a valid path")
-  public void should_GetValidPath_When_ValidPathIsRequested() {
-    String expectedPath = "/example/path";
-    String actualPath = request.getPath();
+  @Description("Should read nothing when empty request is made")
+  public void should_readNothing_when_emptyRequestIsMade() throws IOException {
+    when(socketIO.readLine()).thenReturn("").thenReturn(null);
 
-    assertThat(actualPath, equalTo(expectedPath));
+    requestReader.readRequest();
+
+    assertThat(requestReader.getPath(), is(nullValue()));
+    assertThat(requestReader.getBody(), is(nullValue()));
   }
 
+
+  @Test
+  @Description("Should read headers and path but no body when client makes a request with no body")
+  public void should_readRequestWithNoBody_when_requestWithRequestWithNoBody() throws IOException {
+    String rawRequest = "GET /path HTTP/1.1\r\n"
+        + "Host: localhost\r\n"
+        + "Content-Length: 10\r\n"
+        + "\r\n";
+
+    when(socketIO.readLine()).thenReturn(rawRequest).thenReturn(null);
+
+    requestReader.readRequest();
+
+    assertThat(requestReader.getPath(), is("/path"));
+    assertThat(requestReader.getBody(), is(nullValue()));
+    assertThat(requestReader.getHeaders(), hasEntry("Host", "localhost"));
+    assertThat(requestReader.getHeaders(), hasEntry("Content-Length", "10"));
+  }
+
+  @Test
+  @Description("Should read headers, path, and body when client makes a request with body")
+  public void should_readRequest_when_requestWithBodyIsGiven() throws IOException {
+    String rawRequest = "POST /path HTTP/1.1\r\n"
+        + "Host: localhost\r\n"
+        + "Content-Length: 10\r\n"
+        + "\r\n"
+        + "Hello World";
+
+    when(socketIO.readLine()).thenReturn(rawRequest).thenReturn(null);
+    when(socketIO.readBytes(10)).thenReturn("Hello World");
+
+    requestReader.readRequest();
+
+    assertThat(requestReader.getPath(), is("/path"));
+    assertThat(requestReader.getBody(), is("Hello World"));
+  }
 }
+
+

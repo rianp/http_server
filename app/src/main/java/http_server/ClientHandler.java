@@ -17,13 +17,12 @@ public class ClientHandler implements Runnable {
   @Override
   public void run() {
     try {
-      String request = socketIO.readRequest(client);
-
-      Request httpRequest = new Request(request);
+      RequestReader httpRequest = new RequestReader(socketIO);
+      httpRequest.readRequest();
       String responseBody = router.routeRequest(httpRequest);
 
       String response = "HTTP/1.1 200 OK\r\n\r\n" + responseBody;
-      socketIO.sendMessage(client, response);
+      socketIO.sendMessage(response);
 
       client.close();
     } catch (IOException e) {
