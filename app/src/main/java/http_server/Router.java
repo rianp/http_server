@@ -11,6 +11,9 @@ public class Router {
     } else if ("/echo_body".equals(request.getPath())) {
       SimpleResponse body = new SimpleResponse(request.getBody());
       return body.getResponse();
+    } else if ("/head_request".equals(request.getPath())) {
+      SimpleResponse body = new SimpleResponse("This body does not show up in a HEAD request");
+      return body.getResponse();
     }
 
     return "";

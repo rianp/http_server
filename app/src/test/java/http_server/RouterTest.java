@@ -32,6 +32,19 @@ public class RouterTest {
   }
 
   @Test
+  @DisplayName("should return an expected response body when /head_request is made")
+  void should_ReturnExpectedResponse_When_RequestingHeadRequestRoute() {
+    RequestReader request = Mockito.mock(RequestReader.class);
+    when(request.getPath()).thenReturn("/head_request");
+    SimpleResponse expectedBody = new SimpleResponse("This body does not show up in a HEAD request");
+    String expectedResponse = expectedBody.getResponse();
+
+    String response = router.routeRequest(request);
+
+    assertThat(response, is(equalTo(expectedResponse)));
+  }
+
+  @Test
   @DisplayName("should not route when unknown path is requested")
   void should_NotRoute_When_RequestingUnknownPath() {
     RequestReader request = Mockito.mock(RequestReader.class);
@@ -40,6 +53,7 @@ public class RouterTest {
 
     assertThat(response, emptyString());
   }
+
 }
 
 

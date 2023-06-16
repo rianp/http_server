@@ -1,4 +1,4 @@
-@method-not-allowed @01-getting-started @wip
+@method-not-allowed @01-getting-started
 Feature: Method Not Allowed
 
   Scenario: Finding POST for an endpoint with only GET
