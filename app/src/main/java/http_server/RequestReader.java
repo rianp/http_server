@@ -22,7 +22,7 @@ public class RequestReader {
   }
 
   public void readRequest() throws IOException {
-    String rawRequest = getRequestHead();
+    String rawRequest = getStartOfRequest();
 
     if (!rawRequest.isBlank()) {
       RequestParser parser = new RequestParser(rawRequest);
@@ -37,7 +37,7 @@ public class RequestReader {
     }
   }
 
-  private String getRequestHead() throws IOException {
+  private String getStartOfRequest() throws IOException {
     StringBuilder request = new StringBuilder();
     String line;
 
