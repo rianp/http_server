@@ -15,13 +15,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 
 public class SocketIOTest {
-  SocketIO socketIO = new SocketIO();
-  Socket mockSocket = Mockito.mock(Socket.class);
-  InputStream mockInputStream = mock(InputStream.class);
+  private InputStream mockInputStream = mock(InputStream.class);
 
   @Test
   @DisplayName("should read a message when a message is sent")
-  public void should_ReadRequest_When_MessageIsSent() throws IOException {
+  public void shouldReadRequestWhenMessageIsSent() throws IOException {
+    Socket mockSocket = Mockito.mock(Socket.class);
     String input = "Hello\n";
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(input.getBytes());
 
@@ -32,21 +31,30 @@ public class SocketIOTest {
             invocation.getArgument(1),
             invocation.getArgument(2)));
 
-    String result = socketIO.readRequest(mockSocket);
+    SocketIO socketIO = new SocketIO(mockSocket);
+    String result = socketIO.readLine();
 
     assertThat(result, equalTo("Hello"));
   }
 
   @Test
   @DisplayName("should send a message when a user inputs a message")
-  void should_SendMessage_When_MessageIsGiven() throws IOException {
+  void shouldSendMessageWhenMessageIsGiven() throws IOException {
+    Socket mockSocket = Mockito.mock(Socket.class);
+    InputStream mockInputStream = Mockito.mock(InputStream.class);
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    when(mockSocket.getOutputStream()).thenReturn(outputStream);
-    String message = "Test message";
 
-    socketIO.sendMessage(mockSocket, message);
+    when(mockSocket.getInputStream()).thenReturn(mockInputStream);
+    when(mockSocket.getOutputStream()).thenReturn(outputStream);
+
+    SocketIO socketIO = new SocketIO(mockSocket);
+    String message = "Test message";
+    socketIO.sendMessage(message);
 
     String actualOutput = outputStream.toString();
     assertThat(actualOutput, equalTo("Test message"));
   }
+
 }
+
+

@@ -21,9 +21,9 @@ public class RouterTest {
   @Test
   @DisplayName("should route to simple body file when simple_get_with_body request is made")
   void should_RouteToSimpleBodyFile_When_RequestingSimpleGetWithBody() {
-    Request request = Mockito.mock(Request.class);
+    RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
-    SimpleResponse expectedBody = new SimpleResponse("Hello World");
+    SimpleResponse expectedBody = new SimpleResponse("Hello world");
     String expectedResponse = expectedBody.getResponse();
 
     String response = router.routeRequest(request);
@@ -34,7 +34,7 @@ public class RouterTest {
   @Test
   @DisplayName("should not route when unknown path is requested")
   void should_NotRoute_When_RequestingUnknownPath() {
-    Request request = Mockito.mock(Request.class);
+    RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/unknown_path");
     String response = router.routeRequest(request);
 
