@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class RequestReader {
   private final SocketIO socketIO;
+  private String method;
   private String path;
   private HashMap<String, String> headers;
   private String body;
@@ -26,6 +27,7 @@ public class RequestReader {
 
     if (!rawRequest.isBlank()) {
       RequestParser parser = new RequestParser(rawRequest);
+      method = parser.method();
       path = parser.path();
       headers = parser.headers();
 
