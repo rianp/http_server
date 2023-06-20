@@ -10,6 +10,10 @@ public class RequestParser {
     this.rawRequest = rawRequest;
   }
 
+  public String method() {
+    return startLine().split(" ")[0];
+  }
+
   public String path() {
     return startLine().split(" ")[1];
   }

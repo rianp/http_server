@@ -8,7 +8,10 @@ public class App {
 
     public static void main(final String[] args) throws IOException {
         Console console = new Console();
-        Router router = new Router();
+
+        RequestHandler requestHandler = new RequestHandler();
+        Router router = new Router(requestHandler);
+      
         int port = 8080;
 
         ServerSocket server = new ServerSocket(port);
