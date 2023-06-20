@@ -7,7 +7,7 @@ Feature: Simple HEAD
     Then my response should have status code 200
     And my response should have an empty body
 
-  @wip
+  @implemented
   Scenario: HEAD does not include body
     Given I make a HEAD request to "/head_request"
     Then my response should have status code 200
