@@ -61,4 +61,7 @@ public class RequestReader {
   public HashMap<String, String> getHeaders() {
     return headers;
   }
+
+  public String getMethod() { return method;
+  }
 }
