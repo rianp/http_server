@@ -9,8 +9,8 @@ public class App {
     public static void main(final String[] args) throws IOException {
         Console console = new Console();
 
-        RequestHandler requestHandler = new RequestHandler();
-        Router router = new Router(requestHandler);
+        Router router = new Router();
+        ResponseHandler responseHandler = new ResponseHandler();
       
         int port = 8080;
 
@@ -22,7 +22,7 @@ public class App {
             SocketIO socketIO = new SocketIO(client);
             console.print("Received connection from " + client.getRemoteSocketAddress().toString());
 
-            ClientHandler handler = new ClientHandler(client, socketIO, router);
+            ClientHandler handler = new ClientHandler(client, socketIO, router, responseHandler);
             Thread thread = new Thread(handler);
             thread.start();
         }

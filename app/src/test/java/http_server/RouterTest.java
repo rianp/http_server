@@ -15,8 +15,7 @@ public class RouterTest {
 
   @BeforeEach
   public void setUp() {
-    RequestHandler requestHandler = new RequestHandler();
-    router = new Router(requestHandler);
+    router = new Router();
   }
 
   @Test
@@ -24,12 +23,14 @@ public class RouterTest {
   void should_RouteToSimpleBodyFile_When_RequestingSimpleGetWithBody() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
-    Response expectedBody = new Response("Hello world");
-    String expectedResponse = expectedBody.getResponse();
 
-    String response = router.routeRequest(request);
+    Response expectedBody = new Response();
+    expectedBody.setResponseBody("Hello world");
+    Response expectedResponse = expectedBody;
 
-    assertThat(response, is(equalTo(expectedResponse)));
+    Response response = router.routeRequest(request);
+
+    assertThat(response, samePropertyValuesAs(expectedResponse));
   }
 
   @Test
@@ -37,12 +38,13 @@ public class RouterTest {
   void should_ReturnExpectedResponse_When_RequestingHeadRequestRoute() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/head_request");
-    Response expectedBody = new Response("This body does not show up in a HEAD request");
-    String expectedResponse = expectedBody.getResponse();
+    Response expectedBody = new Response();
+    expectedBody.setResponseBody("This body does not show up in a HEAD request");
+    Response expectedResponse = expectedBody;
 
-    String response = router.routeRequest(request);
+    Response response = router.routeRequest(request);
 
-    assertThat(response, is(equalTo(expectedResponse)));
+    assertThat(response, samePropertyValuesAs(expectedResponse));
   }
 
   @Test
@@ -50,9 +52,14 @@ public class RouterTest {
   void should_NotRoute_When_RequestingUnknownPath() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/unknown_path");
-    String response = router.routeRequest(request);
 
-    assertThat(response, is(equalTo("unexpected request")));
+    Response expectedBody = new Response();
+    expectedBody.setResponseBody("unexpected request");
+    Response expectedResponse = expectedBody;
+
+    Response response = router.routeRequest(request);
+
+    assertThat(response, samePropertyValuesAs(expectedResponse));
   }
 }
 
