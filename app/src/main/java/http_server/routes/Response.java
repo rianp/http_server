@@ -1,12 +1,31 @@
 package http_server.routes;
 
-public class Response {
-  private String response;
+import java.util.HashMap;
+import java.util.Map;
 
-  public Response (String response) {
-    this.response = response;
+public class Response {
+  private Map<String, String> responseHeaders;
+  private String responseBody;
+
+  public Response () {
+
+    this.responseHeaders = new HashMap<>();
+    this.responseBody = "";
   }
-  public String getResponse() {
-    return response;
+
+  public Map<String, String> getResponseHeaders() {
+    return responseHeaders;
+  }
+
+  public String getResponseBody() {
+    return responseBody;
+  }
+
+  public void setResponseHeaders(String headerName, String headerValue) {
+    responseHeaders.put(headerName, headerValue);
+  }
+
+  public void setResponseBody(String body) {
+    responseBody = body;
   }
 }

@@ -1,40 +1,54 @@
 package http_server;
 
+import http_server.routes.Response;
+
 public class Router {
 
-  private final RequestHandler handler;
+  private final Response response = new Response();
 
-  public Router(RequestHandler requestHandler) {
-    this.handler = requestHandler;
-  }
-
-  public String routeRequest(RequestReader request) {
+  public Response routeRequest(RequestReader request) {
     String path = request.getPath();
     String method = request.getMethod();
 
     switch (path) {
       case "/simple_get_with_body":
-        return handler.handleSimpleGetWithBody();
+        response.setResponseBody("Hello world");
+        return response;
 
       case "/simple_get":
-        return handler.handleSimpleGet();
+        return response;
 
       case "/echo_body":
-        if ("POST".equals(method)) {
-          return handler.handleEchoBody(request.getBody());
+        if (method.equals("POST")) {
+          response.setResponseBody(request.getBody());
+          return response;
         }
         break;
 
       case "/head_request":
         if ("HEAD".equals(method)) {
-          return handler.handleHeadRequest();
+          return response;
         }
-        return handler.handleNonHeadRequest();
+        response.setResponseBody("This body does not show up in a HEAD request");
+        return response;
+
+      case "/method_options":
+        if ("OPTIONS".equals(method)) {
+          response.setResponseHeaders("allow", "GET, HEAD, OPTIONS");
+          return response;
+        }
+
+      case "/method_options2":
+        if ("OPTIONS".equals(method)) {
+          response.setResponseHeaders("allow", "GET, HEAD, OPTIONS, PUT, POST");
+          return response;
+        }
 
       default:
         break;
     }
 
-    return handler.handleUnexpectedRequest();
+    response.setResponseBody("unexpected request");
+    return response;
   }
 }

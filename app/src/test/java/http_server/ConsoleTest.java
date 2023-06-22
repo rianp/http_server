@@ -1,5 +1,4 @@
 package http_server;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class ConsoleTest {
   Console console = new Console();
@@ -37,7 +36,7 @@ public class ConsoleTest {
     console.print("Print");
 
     String output = outputStream.toString().trim();
-    assertThat(output, equalTo("Print"));
+    assertThat(output).isEqualTo("Print");
   }
 
 
@@ -50,6 +49,7 @@ public class ConsoleTest {
 
     String input = console.inputString("Enter input: ");
 
-    assertThat(input, equalTo(expectedInput));
+    assertThat(input).isEqualTo(expectedInput);
   }
 }
+
