@@ -8,8 +8,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class RequestReaderTest {
@@ -31,8 +30,8 @@ public class RequestReaderTest {
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is(nullValue()));
-    assertThat(requestReader.getBody(), is(nullValue()));
+    assertThat(requestReader.getPath()).isNull();
+    assertThat(requestReader.getBody()).isNull();
   }
 
 
@@ -48,10 +47,10 @@ public class RequestReaderTest {
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is("/path"));
-    assertThat(requestReader.getBody(), is(nullValue()));
-    assertThat(requestReader.getHeaders(), hasEntry("Host", "localhost"));
-    assertThat(requestReader.getHeaders(), hasEntry("Content-Length", "10"));
+    assertThat(requestReader.getPath()).isEqualTo("/path");
+    assertThat(requestReader.getBody()).isNull();
+    assertThat(requestReader.getHeaders()).containsEntry("Host", "localhost");
+    assertThat(requestReader.getHeaders()).containsEntry("Content-Length", "10");
   }
 
   @Test
@@ -68,9 +67,10 @@ public class RequestReaderTest {
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is("/path"));
-    assertThat(requestReader.getBody(), is("Hello World"));
+    assertThat(requestReader.getPath()).isEqualTo("/path");
+    assertThat(requestReader.getBody()).isEqualTo("Hello World");
   }
 }
+
 
 

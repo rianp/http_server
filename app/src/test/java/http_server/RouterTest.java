@@ -6,8 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 public class RouterTest {
@@ -24,13 +23,12 @@ public class RouterTest {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
 
-    Response expectedBody = new Response();
-    expectedBody.setResponseBody("Hello world");
-    Response expectedResponse = expectedBody;
+    Response expectedResult = new Response();
+    expectedResult.setResponseBody("Hello world");
 
     Response response = router.routeRequest(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResponse));
+    assertThat(response).isEqualToComparingFieldByFieldRecursively(expectedResult);
   }
 
   @Test
@@ -38,13 +36,26 @@ public class RouterTest {
   void should_ReturnExpectedResponse_When_RequestingHeadRequestRoute() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/head_request");
-    Response expectedBody = new Response();
-    expectedBody.setResponseBody("This body does not show up in a HEAD request");
-    Response expectedResponse = expectedBody;
+    Response expectedResult = new Response();
+    expectedResult.setResponseBody("This body does not show up in a HEAD request");
 
     Response response = router.routeRequest(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResponse));
+    assertThat(response).isEqualToComparingFieldByFieldRecursively(expectedResult);
+  }
+
+  @Test
+  @DisplayName("should return an expected response body when /method_options is made")
+  void should_ReturnExpectedResponse_When_RequestingOptionsRequestRoute() {
+    RequestReader request = Mockito.mock(RequestReader.class);
+    when(request.getPath()).thenReturn("/method_options");
+    when(request.getMethod()).thenReturn("OPTIONS");
+    Response expectedResult = new Response();
+    expectedResult.setResponseHeaders("allow", "GET, HEAD, OPTIONS");
+
+    Response response = router.routeRequest(request);
+
+    assertThat(response).isEqualToComparingFieldByFieldRecursively(expectedResult);
   }
 
   @Test
@@ -53,14 +64,14 @@ public class RouterTest {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/unknown_path");
 
-    Response expectedBody = new Response();
-    expectedBody.setResponseBody("unexpected request");
-    Response expectedResponse = expectedBody;
+    Response expectedResult = new Response();
+    expectedResult.setResponseBody("unexpected request");
 
     Response response = router.routeRequest(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResponse));
+    assertThat(response).isEqualToComparingFieldByFieldRecursively(expectedResult);
   }
 }
+
 
 

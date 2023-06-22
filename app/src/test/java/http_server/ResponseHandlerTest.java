@@ -3,8 +3,7 @@ package http_server;
 import http_server.routes.Response;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
@@ -33,11 +32,12 @@ public class ResponseHandlerTest {
 
     String actualResponse = responseHandler.buildResponse(requestReader, router);
 
-    assertThat(actualResponse, startsWith("HTTP/1.1 200 OK\r\n"));
-    assertThat(actualResponse, containsString("Content-Type: text/plain\r\n"));
-    assertThat(actualResponse, containsString("Server: Test Server\r\n"));
-    assertThat(actualResponse, containsString("\r\n"));
-    assertThat(actualResponse, containsString("Hello, world!"));
+    assertThat(actualResponse).startsWith("HTTP/1.1 200 OK\r\n");
+    assertThat(actualResponse).contains("Content-Type: text/plain\r\n");
+    assertThat(actualResponse).contains("Server: Test Server\r\n");
+    assertThat(actualResponse).contains("\r\n");
+    assertThat(actualResponse).contains("Hello, world!");
   }
 }
+
 
