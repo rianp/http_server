@@ -2,13 +2,13 @@ package http_server;
 
 public class Router {
 
-  private final RequestHandler handler;
+  private final ResponseHandler handler;
 
-  public Router(RequestHandler requestHandler) {
+  public Router(ResponseHandler requestHandler) {
     this.handler = requestHandler;
   }
 
-  public String routeRequest(RequestReader request) {
+  public Response routeRequest(RequestReader request) {
     String path = request.getPath();
     String method = request.getMethod();
 
@@ -27,14 +27,24 @@ public class Router {
 
       case "/head_request":
         if ("HEAD".equals(method)) {
-          return handler.handleHeadRequest();
+          return handler.handleHead();
         }
-        return handler.handleNonHeadRequest();
+        return handler.handleNonHead();
+
+      case "/method_options":
+        if ("OPTIONS".equals(method)) {
+          return handler.handleMethodOptions("allow", "GET, HEAD, OPTIONS");
+        }
+
+      case "/method_options2":
+        if ("OPTIONS".equals(method)) {
+          return handler.handleMethodOptions("allow", "GET, HEAD, OPTIONS, PUT, POST");
+        }
 
       default:
         break;
     }
 
-    return handler.handleUnexpectedRequest();
+    return handler.handleUnexpected();
   }
 }

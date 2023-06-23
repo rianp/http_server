@@ -9,7 +9,7 @@ public class App {
     public static void main(final String[] args) throws IOException {
         Console console = new Console();
 
-        RequestHandler requestHandler = new RequestHandler();
+        ResponseHandler requestHandler = new ResponseHandler();
         Router router = new Router(requestHandler);
       
         int port = 8080;

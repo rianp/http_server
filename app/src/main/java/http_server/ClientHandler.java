@@ -2,11 +2,12 @@ package http_server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Map;
 
 public class ClientHandler implements Runnable {
-  private Socket client;
-  private SocketIO socketIO;
-  private Router router;
+  private final Socket client;
+  private final SocketIO socketIO;
+  private final Router router;
 
   public ClientHandler(Socket client, SocketIO socketIO, Router router) {
     this.client = client;
@@ -19,10 +20,10 @@ public class ClientHandler implements Runnable {
     try {
       RequestReader httpRequest = new RequestReader(socketIO);
       httpRequest.readRequest();
-      String responseBody = router.routeRequest(httpRequest);
+      Response response = router.routeRequest(httpRequest);
+      ResponseFormatter formattedResponse = new ResponseFormatter();
 
-      String response = "HTTP/1.1 200 OK\r\n\r\n" + responseBody;
-      socketIO.sendMessage(response);
+      socketIO.sendMessage(formattedResponse.formatResponse(response));
 
       client.close();
     } catch (IOException e) {
