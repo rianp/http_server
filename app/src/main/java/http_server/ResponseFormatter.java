@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ResponseFormatter {
 
-  public String formatResponse(Response response) {
+  public String format(Response response) {
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append("HTTP/1.1 200 OK\r\n");
 

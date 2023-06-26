@@ -24,7 +24,7 @@ public class ResponseBuilder {
           return handler.buildSimpleGetResponse();
 
         case "/echo_body":
-          if ("POST".equals(method)) {
+          if (method.equals("POST")) {
             String body = request.getBody();
             if (body != null) {
               return handler.buildEchoBodyResponse(body);

@@ -20,9 +20,8 @@ public class ClientHandler implements Runnable {
       RequestReader httpRequest = new RequestReader(socketIO);
       httpRequest.readRequest();
       Response response = responseBuilder.buildResponse(httpRequest);
-      ResponseFormatter formattedResponse = new ResponseFormatter();
-
-      socketIO.sendMessage(formattedResponse.formatResponse(response));
+      ResponseFormatter responseFormatter = new ResponseFormatter();
+      socketIO.sendMessage(responseFormatter.format(response));
 
       client.close();
     } catch (IOException e) {

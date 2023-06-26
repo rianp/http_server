@@ -22,6 +22,10 @@ public class RequestReader {
     return body;
   }
 
+  public String getMethod() {
+    return method;
+  }
+
   public void readRequest() throws IOException {
     String rawRequest = getStartOfRequest();
 
@@ -60,9 +64,5 @@ public class RequestReader {
 
   public HashMap<String, String> getHeaders() {
     return headers;
-  }
-
-  public String getMethod() {
-    return method;
   }
 }

@@ -19,7 +19,7 @@ public class ResponseBuilderTest {
   }
 
   @Test
-  @DisplayName("should route to simple body file when simple_get_with_body request is made")
+  @DisplayName("should return an expected response body when simple_get_with_body request is made")
   void should_RouteToSimpleBodyFile_When_RequestingSimpleGetWithBody() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
@@ -67,7 +67,23 @@ public class ResponseBuilderTest {
   }
 
   @Test
-  @DisplayName("should not route when unknown path is requested")
+  @DisplayName("should return an expected response body when /method_options2 is made")
+  void should_ReturnExpectedResponse_When_RequestingOptions2RequestRoute() {
+    RequestReader request = Mockito.mock(RequestReader.class);
+    when(request.getPath()).thenReturn("/method_options2");
+    when(request.getMethod()).thenReturn("OPTIONS");
+
+    Response expectedResult = new Response();
+    expectedResult.setResponseHeaders("allow", "GET, HEAD, OPTIONS, PUT, POST");
+
+    Response response = responseBuilder.buildResponse(request);
+
+    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
+    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+  }
+
+  @Test
+  @DisplayName("should return an unexpected request message when an unknown path is requested")
   void should_NotRoute_When_RequestingUnknownPath() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/unknown_path");

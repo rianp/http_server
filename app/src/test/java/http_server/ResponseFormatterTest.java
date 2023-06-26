@@ -25,9 +25,9 @@ public class ResponseFormatterTest {
     when(response.getResponseHeaders()).thenReturn(responseHeaders);
     when(response.getResponseBody()).thenReturn("Hello, world!");
 
-    ResponseFormatter formattedResponse = new ResponseFormatter();
+    ResponseFormatter responseFormatter = new ResponseFormatter();
 
-    String actualResponse = formattedResponse.formatResponse(response);
+    String actualResponse = responseFormatter.format(response);
 
     assertThat(actualResponse, startsWith("HTTP/1.1 200 OK\r\n"));
     assertThat(actualResponse, containsString("Content-Type: text/plain\r\n"));
