@@ -2,14 +2,13 @@ package http_server;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Map;
 
 public class ClientHandler implements Runnable {
   private final Socket client;
   private final SocketIO socketIO;
-  private final Router router;
+  private final ResponseBuilder router;
 
-  public ClientHandler(Socket client, SocketIO socketIO, Router router) {
+  public ClientHandler(Socket client, SocketIO socketIO, ResponseBuilder router) {
     this.client = client;
     this.socketIO = socketIO;
     this.router = router;

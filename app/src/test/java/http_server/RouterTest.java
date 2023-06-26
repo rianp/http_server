@@ -10,12 +10,12 @@ import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.mockito.Mockito.when;
 
 public class RouterTest {
-  private Router router;
+  private ResponseBuilder router;
 
   @BeforeEach
   public void setUp() {
     ResponseHandler requestHandler = new ResponseHandler();
-    router = new Router(requestHandler);
+    router = new ResponseBuilder(requestHandler);
   }
 
   @Test

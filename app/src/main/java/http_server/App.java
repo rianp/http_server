@@ -10,7 +10,7 @@ public class App {
         Console console = new Console();
 
         ResponseHandler requestHandler = new ResponseHandler();
-        Router router = new Router(requestHandler);
+        ResponseBuilder router = new ResponseBuilder(requestHandler);
       
         int port = 8080;
 
