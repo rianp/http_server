@@ -3,35 +3,37 @@ package http_server;
 public class ResponseHandler {
   Response response = new Response();
 
-  public Response handleSimpleGetWithBody() {
+  public Response buildSimpleGetWithBodyResponse() {
     response.setResponseBody("Hello world");
     return response;
   }
 
-  public Response handleSimpleGet() {
+  public Response buildSimpleGetResponse() {
     return response;
   }
 
-  public Response handleEchoBody(String requestBody) {
+  public Response buildEchoBodyResponse(String requestBody) {
     response.setResponseBody(requestBody);
     return response;
   }
 
-  public Response handleHead() {
+  public Response buildHeadResponse() {
+    response.setResponseBody("");
     return response;
   }
 
-  public Response handleNonHead() {
+  public Response buildNonHeadResponse() {
     response.setResponseBody("This body does not show up in a HEAD request");
     return response;
   }
 
-  public Response handleMethodOptions(String method, String options) {
+  public Response buildMethodOptionsResponse(String method, String options) {
     response.setResponseHeaders(method, options);
+    response.setResponseBody("");
     return response;
   }
 
-  public Response handleUnexpected() {
+  public Response buildUnexpectedResponse() {
     response.setResponseBody("unexpected request");
     return response;
   }

@@ -15,34 +15,37 @@ public class ResponseBuilder {
     if (path != null && method != null) {
       switch (path) {
         case "/simple_get_with_body":
-          return handler.handleSimpleGetWithBody();
+          return handler.buildSimpleGetWithBodyResponse();
 
         case "/simple_get":
-          return handler.handleSimpleGet();
+          if (method.equals("HEAD")) {
+            return handler.buildHeadResponse();
+          }
+          return handler.buildSimpleGetResponse();
 
         case "/echo_body":
           if ("POST".equals(method)) {
             String body = request.getBody();
             if (body != null) {
-              return handler.handleEchoBody(body);
+              return handler.buildEchoBodyResponse(body);
             }
           }
           break;
 
         case "/head_request":
-          if ("HEAD".equals(method)) {
-            return handler.handleHead();
+          if (method.equals("HEAD")) {
+            return handler.buildHeadResponse();
           }
-          return handler.handleNonHead();
+          return handler.buildNonHeadResponse();
 
         case "/method_options":
-          if ("OPTIONS".equals(method)) {
-            return handler.handleMethodOptions("allow", "GET, HEAD, OPTIONS");
+          if (method.equals("OPTIONS")) {
+            return handler.buildMethodOptionsResponse("allow", "GET, HEAD, OPTIONS");
           }
 
         case "/method_options2":
-          if ("OPTIONS".equals(method)) {
-            return handler.handleMethodOptions("allow", "GET, HEAD, OPTIONS, PUT, POST");
+          if (method.equals("OPTIONS")) {
+            return handler.buildMethodOptionsResponse("allow", "GET, HEAD, OPTIONS, PUT, POST");
           }
 
         default:
@@ -50,6 +53,6 @@ public class ResponseBuilder {
       }
     }
 
-    return handler.handleUnexpected();
+    return handler.buildUnexpectedResponse();
   }
 }

@@ -10,55 +10,55 @@ public class ResponseHandlerTest {
 
   @Test
   @DisplayName("should handle simple_get_with_body request")
-  void shouldHandleSimpleGetWithBody() {
+  void shouldbuildSimpleGetWithBodyResponse() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.handleSimpleGetWithBody();
+    Response response = handler.buildSimpleGetWithBodyResponse();
 
     assertThat(response.getResponseBody(), equalTo("Hello world"));
   }
 
   @Test
   @DisplayName("should handle simple_get request")
-  void shouldHandleSimpleGet() {
+  void shouldbuildSimpleGet() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.handleSimpleGet();
+    Response response = handler.buildSimpleGetResponse();
 
     assertThat(response.getResponseBody(), equalTo(""));
   }
 
   @Test
   @DisplayName("should handle echo_body request")
-  void shouldHandleEchoBody() {
+  void shouldbuildEchoBodyResponse() {
     ResponseHandler handler = new ResponseHandler();
     String requestBody = "Request Body";
-    Response response = handler.handleEchoBody(requestBody);
+    Response response = handler.buildEchoBodyResponse(requestBody);
 
     assertThat(response.getResponseBody(), equalTo(requestBody));
   }
 
   @Test
   @DisplayName("should handle head_request request")
-  void shouldhandleHead() {
+  void shouldbuildHeadResponse() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.handleHead();
+    Response response = handler.buildHeadResponse();
 
     assertThat(response.getResponseBody(), equalTo(""));
   }
 
   @Test
   @DisplayName("should handle non-head_request request")
-  void shouldhandleNonHead() {
+  void shouldbuildNonHeadResponse() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.handleNonHead();
+    Response response = handler.buildNonHeadResponse();
 
     assertThat(response.getResponseBody(), equalTo("This body does not show up in a HEAD request"));
   }
 
   @Test
   @DisplayName("should handle unexpected request")
-  void shouldhandleUnexpected() {
+  void shouldbuildUnexpectedResponse() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.handleUnexpected();
+    Response response = handler.buildUnexpectedResponse();
 
     assertThat(response.getResponseBody(), equalTo("unexpected request"));
   }
