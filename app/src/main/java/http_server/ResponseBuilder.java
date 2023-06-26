@@ -8,7 +8,7 @@ public class ResponseBuilder {
     this.handler = requestHandler;
   }
 
-  public Response routeRequest(RequestReader request) {
+  public Response buildResponse(RequestReader request) {
     String path = request.getPath();
     String method = request.getMethod();
 

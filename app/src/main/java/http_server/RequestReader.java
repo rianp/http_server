@@ -32,7 +32,7 @@ public class RequestReader {
       headers = parser.headers();
 
       body = null;
-      if (headers.containsKey("Content-Length")) {
+      if (headers != null && headers.containsKey("Content-Length")) {
         int bytes = Integer.parseInt(headers.get("Content-Length"));
         body = getRequestBody(bytes);
       }
@@ -62,6 +62,7 @@ public class RequestReader {
     return headers;
   }
 
-  public String getMethod() { return method;
+  public String getMethod() {
+    return method;
   }
 }

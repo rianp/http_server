@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
-public class RouterTest {
-  private ResponseBuilder router;
+public class ResponseBuilderTest {
+  private ResponseBuilder responseBuilder;
 
   @BeforeEach
   public void setUp() {
     ResponseHandler requestHandler = new ResponseHandler();
-    router = new ResponseBuilder(requestHandler);
+    responseBuilder = new ResponseBuilder(requestHandler);
   }
 
   @Test
@@ -23,13 +23,15 @@ public class RouterTest {
   void should_RouteToSimpleBodyFile_When_RequestingSimpleGetWithBody() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/simple_get_with_body");
+    when(request.getMethod()).thenReturn("GET");
 
     Response expectedResult = new Response();
     expectedResult.setResponseBody("Hello world");
 
-    Response response = router.routeRequest(request);
+    Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResult));
+    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
+    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
   }
 
   @Test
@@ -37,12 +39,15 @@ public class RouterTest {
   void should_ReturnExpectedResponse_When_RequestingHeadRequestRoute() {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/head_request");
+    when(request.getMethod()).thenReturn("GET");
+
     Response expectedResult = new Response();
     expectedResult.setResponseBody("This body does not show up in a HEAD request");
 
-    Response response = router.routeRequest(request);
+    Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResult));
+    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
+    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
   }
 
   @Test
@@ -51,12 +56,14 @@ public class RouterTest {
     RequestReader request = Mockito.mock(RequestReader.class);
     when(request.getPath()).thenReturn("/method_options");
     when(request.getMethod()).thenReturn("OPTIONS");
+
     Response expectedResult = new Response();
     expectedResult.setResponseHeaders("allow", "GET, HEAD, OPTIONS");
 
-    Response response = router.routeRequest(request);
+    Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResult));
+    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
+    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
   }
 
   @Test
@@ -68,12 +75,12 @@ public class RouterTest {
     Response expectedResult = new Response();
     expectedResult.setResponseBody("unexpected request");
 
-    Response response = router.routeRequest(request);
+    Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response, samePropertyValuesAs(expectedResult));
+    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
+    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
   }
 }
-
 
 
 

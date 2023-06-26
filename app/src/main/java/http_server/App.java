@@ -10,7 +10,7 @@ public class App {
         Console console = new Console();
 
         ResponseHandler requestHandler = new ResponseHandler();
-        ResponseBuilder router = new ResponseBuilder(requestHandler);
+        ResponseBuilder responseBuilder = new ResponseBuilder(requestHandler);
       
         int port = 8080;
 
@@ -22,7 +22,7 @@ public class App {
             SocketIO socketIO = new SocketIO(client);
             console.print("Received connection from " + client.getRemoteSocketAddress().toString());
 
-            ClientHandler handler = new ClientHandler(client, socketIO, router);
+            ClientHandler handler = new ClientHandler(client, socketIO, responseBuilder);
             Thread thread = new Thread(handler);
             thread.start();
         }
