@@ -2,10 +2,10 @@ package http_server;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 import java.util.HashMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RequestParserTest {
 
@@ -17,7 +17,7 @@ public class RequestParserTest {
 
     String path = requestParser.path();
 
-    assertThat(path, is(equalTo("/path")));
+    assertThat(path).isEqualTo("/path");
   }
 
   @Test
@@ -28,9 +28,9 @@ public class RequestParserTest {
 
     HashMap<String, String> headers = requestParser.headers();
 
-    assertThat(headers, is(notNullValue()));
-    assertThat(headers, hasEntry("Host", "balloons.com"));
-    assertThat(headers, hasEntry("Content-Type", "cookies/pizza"));
+    assertThat(headers).isNotNull();
+    assertThat(headers).containsEntry("Host", "balloons.com");
+    assertThat(headers).containsEntry("Content-Type", "cookies/pizza");
   }
 
   @Test
@@ -41,9 +41,9 @@ public class RequestParserTest {
 
     HashMap<String, String> headers = requestParser.headers();
 
-    assertThat(headers, is(notNullValue()));
-    assertThat(headers, hasEntry("Host", "balloons.com"));
-    assertThat(headers, hasEntry("Content-Type", "cookies/pizza"));
-    assertThat(headers, hasEntry("User-Agent", "cows"));
+    assertThat(headers).isNotNull();
+    assertThat(headers).containsEntry("Host", "balloons.com");
+    assertThat(headers).containsEntry("Content-Type", "cookies/pizza");
+    assertThat(headers).containsEntry("User-Agent", "cows");
   }
 }

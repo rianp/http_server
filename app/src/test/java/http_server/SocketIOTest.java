@@ -10,12 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class SocketIOTest {
-  private InputStream mockInputStream = mock(InputStream.class);
 
   @Test
   @DisplayName("should read a message when a message is sent")
@@ -24,6 +22,7 @@ public class SocketIOTest {
     String input = "Hello\n";
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(input.getBytes());
 
+    InputStream mockInputStream = mock(InputStream.class);
     when(mockSocket.getInputStream()).thenReturn(mockInputStream);
     when(mockInputStream.read(any(byte[].class), anyInt(), anyInt()))
         .thenAnswer(invocation -> byteArrayInputStream.read(
@@ -34,7 +33,7 @@ public class SocketIOTest {
     SocketIO socketIO = new SocketIO(mockSocket);
     String result = socketIO.readLine();
 
-    assertThat(result, equalTo("Hello"));
+    assertThat(result).isEqualTo("Hello");
   }
 
   @Test
@@ -52,7 +51,7 @@ public class SocketIOTest {
     socketIO.sendMessage(message);
 
     String actualOutput = outputStream.toString();
-    assertThat(actualOutput, equalTo("Test message"));
+    assertThat(actualOutput).isEqualTo("Test message");
   }
 
 }
