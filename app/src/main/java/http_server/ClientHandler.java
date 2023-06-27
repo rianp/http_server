@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
-  private Socket client;
-  private SocketIO socketIO;
-  private Router router;
+  private final Socket client;
+  private final SocketIO socketIO;
+  private final ResponseBuilder responseBuilder;
 
-  public ClientHandler(Socket client, SocketIO socketIO, Router router) {
+  public ClientHandler(Socket client, SocketIO socketIO, ResponseBuilder responseBuilder) {
     this.client = client;
     this.socketIO = socketIO;
-    this.router = router;
+    this.responseBuilder = responseBuilder;
   }
 
   @Override
@@ -19,10 +19,9 @@ public class ClientHandler implements Runnable {
     try {
       RequestReader httpRequest = new RequestReader(socketIO);
       httpRequest.readRequest();
-      String responseBody = router.routeRequest(httpRequest);
-
-      String response = "HTTP/1.1 200 OK\r\n\r\n" + responseBody;
-      socketIO.sendMessage(response);
+      Response response = responseBuilder.buildResponse(httpRequest);
+      ResponseFormatter responseFormatter = new ResponseFormatter();
+      socketIO.sendMessage(responseFormatter.format(response));
 
       client.close();
     } catch (IOException e) {
