@@ -18,7 +18,7 @@ public class ResponseBuilder {
       switch (path) {
         case "/simple_get_with_body":
           if (routeValidator.hasMethod(path, method)) {
-            return handler.buildSimpleGetWithBodyResponse("200");
+            return handler.buildResponse("200", "Hello world!");
           }
           return handler.buildMethodOptionsResponse("allow", "GET, HEAD, OPTIONS", "405");
 
@@ -27,7 +27,7 @@ public class ResponseBuilder {
             if (method.equals("HEAD")) {
               return handler.buildHeadResponse("200");
             }
-            return handler.buildSimpleGetResponse("200");
+            return handler.buildResponse("200", "");
           }
           return handler.buildMethodOptionsResponse("allow", "GET, HEAD, OPTIONS", "405");
 
@@ -35,7 +35,7 @@ public class ResponseBuilder {
           if (method.equals("POST")) {
             String body = request.getBody();
             if (body != null) {
-              return handler.buildEchoBodyResponse(body, "200");
+              return handler.buildResponse("200", body);
             }
           }
           break;

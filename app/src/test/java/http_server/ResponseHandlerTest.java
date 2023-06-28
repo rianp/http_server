@@ -8,31 +8,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResponseHandlerTest {
 
   @Test
-  @DisplayName("should handle simple_get_with_body request")
-  void should_BuildSimpleGetWithBodyResponse() {
+  @DisplayName("should build response")
+  void should_BuildResponse() {
     ResponseHandler handler = new ResponseHandler();
-    Response response = handler.buildSimpleGetWithBodyResponse("200 OK");
+    String someResponseBody = "banana";
+    String someResponseStatus = "999 OK";
 
-    assertThat(response.getResponseBody()).isEqualTo("Hello world");
-  }
+    Response response = handler.buildResponse(someResponseStatus, someResponseBody);
 
-  @Test
-  @DisplayName("should handle simple_get request")
-  void should_BuildSimpleGet() {
-    ResponseHandler handler = new ResponseHandler();
-    Response response = handler.buildSimpleGetResponse("200 OK");
-
-    assertThat(response.getResponseBody()).isEqualTo("");
-  }
-
-  @Test
-  @DisplayName("should handle echo_body request")
-  void should_BuildEchoBodyResponse() {
-    ResponseHandler handler = new ResponseHandler();
-    String requestBody = "Request Body";
-    Response response = handler.buildEchoBodyResponse(requestBody, "200 OK");
-
-    assertThat(response.getResponseBody()).isEqualTo(requestBody);
+    assertThat(response.getResponseBody()).isEqualTo(someResponseBody);
+    assertThat(response.getResponseStatus()).isEqualTo(someResponseStatus);
   }
 
   @Test
