@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class Response {
   private String responseStatus;
-  private Map<String, String> responseHeaders;
+  private final Map<String, String> responseHeaders;
   private String responseBody;
 
   public Response () {
-    this.responseStatus = "200";
+    this.responseStatus = "";
     this.responseHeaders = new HashMap<>();
     this.responseBody = "";
   }

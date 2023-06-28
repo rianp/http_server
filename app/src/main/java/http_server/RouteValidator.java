@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Router {
+public class RouteValidator {
 
   private final Map<String, List<String>> routes;
 
-  public Router() {
+  public RouteValidator() {
     routes = new HashMap<>();
 
     routes.put("/simple_get_with_body", List.of("GET", "HEAD", "OPTIONS"));
@@ -19,7 +19,7 @@ public class Router {
     routes.put("/method_options2", List.of("OPTIONS"));
   }
 
-  public boolean isValuePresent(String key, String value) {
+  public boolean hasMethod(String key, String value) {
     if (routes.containsKey(key)) {
       List<String> values = routes.get(key);
       return values.contains(value);
@@ -27,11 +27,3 @@ public class Router {
     return false;
   }
 }
-
-
-
-// router will refer to routes
-// routes will create route objects
-// that have method, path, and controller instance variables
-// these routes will be stored in a hashmap in router
-// these route objects will be grabbed in ResponseBuilder

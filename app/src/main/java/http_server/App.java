@@ -10,22 +10,23 @@ public class App {
         Console console = new Console();
 
         ResponseHandler requestHandler = new ResponseHandler();
-        Router router = new Router();
-        ResponseBuilder responseBuilder = new ResponseBuilder(requestHandler, router);
+        RouteValidator routeValidator = new RouteValidator();
+        ResponseBuilder responseBuilder = new ResponseBuilder(requestHandler, routeValidator);
       
         int port = 8080;
 
-        ServerSocket server = new ServerSocket(port);
-        console.print("Listening on port " + port);
-        Socket client;
+        try (ServerSocket server = new ServerSocket(port)) {
+            console.print("Listening on port " + port);
+            Socket client;
 
-        while ((client = server.accept()) != null) {
-            SocketIO socketIO = new SocketIO(client);
-            console.print("Received connection from " + client.getRemoteSocketAddress().toString());
+            while ((client = server.accept()) != null) {
+                SocketIO socketIO = new SocketIO(client);
+                console.print("Received connection from " + client.getRemoteSocketAddress().toString());
 
-            ClientHandler handler = new ClientHandler(client, socketIO, responseBuilder);
-            Thread thread = new Thread(handler);
-            thread.start();
+                ClientHandler handler = new ClientHandler(client, socketIO, responseBuilder);
+                Thread thread = new Thread(handler);
+                thread.start();
+            }
         }
     }
 }

@@ -14,8 +14,8 @@ public class ResponseBuilderTest {
   @BeforeEach
   public void setUp() {
     ResponseHandler requestHandler = new ResponseHandler();
-    Router router = new Router();
-    responseBuilder = new ResponseBuilder(requestHandler, router);
+    RouteValidator routeValidator = new RouteValidator();
+    responseBuilder = new ResponseBuilder(requestHandler, routeValidator);
   }
 
   @Test

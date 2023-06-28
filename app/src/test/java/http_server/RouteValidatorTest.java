@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class RouterTest {
+public class RouteValidatorTest {
 
   @Test
   @DisplayName("should return true when a method exists for a given path")
   void should_ReturnTrue_When_AMethodExistsForAGivenPath() {
-    Router router = new Router();
+    RouteValidator routeValidator = new RouteValidator();
     String key = "/simple_get_with_body";
     String value = "GET";
 
-    boolean result = router.isValuePresent(key, value);
+    boolean result = routeValidator.hasMethod(key, value);
 
     assertThat(result).isTrue();
   }
@@ -22,11 +22,11 @@ public class RouterTest {
   @Test
   @DisplayName("should return false when a method doesnt exist for a given path")
   void should_ReturnFalse_When_AMethodDoesntExistForAGivenPath() {
-    Router router = new Router();
+    RouteValidator routeValidator = new RouteValidator();
     String key = "/simple_get_with_body";
     String value = "POST";
 
-    boolean result = router.isValuePresent(key, value);
+    boolean result = routeValidator.hasMethod(key, value);
 
     assertThat(result).isFalse();
   }
@@ -34,11 +34,11 @@ public class RouterTest {
   @Test
   @DisplayName("should return false when a given path doesn't exist")
   void should_ReturnFalse_WhenAGivenPathDoesNotExist() {
-    Router router = new Router();
+    RouteValidator routeValidator = new RouteValidator();
     String key = "/non_existing_key";
     String value = "GET";
 
-    boolean result = router.isValuePresent(key, value);
+    boolean result = routeValidator.hasMethod(key, value);
 
     assertThat(result).isFalse();
   }

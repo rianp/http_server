@@ -40,6 +40,13 @@ public class ResponseHandler {
     return response;
   }
 
+  public Response buildRedirectResponse(String method, String options, String status) {
+    response.setResponseStatus(status);
+    response.setResponseHeaders(method, options);
+    response.setResponseBody("");
+    return response;
+  }
+
   public Response buildUnexpectedResponse(String status) {
     response.setResponseStatus(status);
     response.setResponseBody("unexpected request");

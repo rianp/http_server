@@ -3,11 +3,11 @@ package http_server;
 public class ResponseBuilder {
 
   private final ResponseHandler handler;
-  private final Router router;
+  private final RouteValidator routeValidator;
 
-  public ResponseBuilder(ResponseHandler requestHandler, Router router) {
+  public ResponseBuilder(ResponseHandler requestHandler, RouteValidator routeValidator) {
     this.handler = requestHandler;
-    this.router = router;
+    this.routeValidator = routeValidator;
   }
 
   public Response buildResponse(RequestReader request) {
@@ -17,13 +17,13 @@ public class ResponseBuilder {
     if (path != null && method != null) {
       switch (path) {
         case "/simple_get_with_body":
-          if (router.isValuePresent(path, method)) {
+          if (routeValidator.hasMethod(path, method)) {
             return handler.buildSimpleGetWithBodyResponse("200");
           }
           return handler.buildMethodOptionsResponse("allow", "GET, HEAD, OPTIONS", "405");
 
         case "/simple_get":
-          if (router.isValuePresent(path, method)) {
+          if (routeValidator.hasMethod(path, method)) {
             if (method.equals("HEAD")) {
               return handler.buildHeadResponse("200");
             }
@@ -58,7 +58,7 @@ public class ResponseBuilder {
 
         case "/redirect":
           if (method.equals("GET")) {
-            return handler.buildMethodOptionsResponse("location", "http://0.0.0.0:8080/simple_get", "301");
+            return handler.buildRedirectResponse("location", "http://127.0.0.1:8080/simple_get", "301");
           }
 
         default:
