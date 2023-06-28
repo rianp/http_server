@@ -8,8 +8,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class RequestReaderTest {
@@ -26,19 +25,18 @@ public class RequestReaderTest {
 
   @Test
   @Description("Should read nothing when empty request is made")
-  public void should_readNothing_when_emptyRequestIsMade() throws IOException {
+  public void shouldReadNothingWhenEmptyRequestIsMade() throws IOException {
     when(socketIO.readLine()).thenReturn("").thenReturn(null);
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is(nullValue()));
-    assertThat(requestReader.getBody(), is(nullValue()));
+    assertThat(requestReader.getPath()).isNull();
+    assertThat(requestReader.getBody()).isNull();
   }
-
 
   @Test
   @Description("Should read headers and path but no body when client makes a request with no body")
-  public void should_readRequestWithNoBody_when_requestWithRequestWithNoBody() throws IOException {
+  public void shouldReadRequestWithNoBodyWhenRequestWithNoBody() throws IOException {
     String rawRequest = "GET /path HTTP/1.1\r\n"
         + "Host: localhost\r\n"
         + "Content-Length: 10\r\n"
@@ -48,15 +46,15 @@ public class RequestReaderTest {
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is("/path"));
-    assertThat(requestReader.getBody(), is(nullValue()));
-    assertThat(requestReader.getHeaders(), hasEntry("Host", "localhost"));
-    assertThat(requestReader.getHeaders(), hasEntry("Content-Length", "10"));
+    assertThat(requestReader.getPath()).isEqualTo("/path");
+    assertThat(requestReader.getBody()).isNull();
+    assertThat(requestReader.getHeaders()).containsEntry("Host", "localhost");
+    assertThat(requestReader.getHeaders()).containsEntry("Content-Length", "10");
   }
 
   @Test
   @Description("Should read headers, path, and body when client makes a request with body")
-  public void should_readRequest_when_requestWithBodyIsGiven() throws IOException {
+  public void shouldReadRequestWhenRequestWithBodyIsGiven() throws IOException {
     String rawRequest = "POST /path HTTP/1.1\r\n"
         + "Host: localhost\r\n"
         + "Content-Length: 10\r\n"
@@ -68,9 +66,10 @@ public class RequestReaderTest {
 
     requestReader.readRequest();
 
-    assertThat(requestReader.getPath(), is("/path"));
-    assertThat(requestReader.getBody(), is("Hello World"));
+    assertThat(requestReader.getPath()).isEqualTo("/path");
+    assertThat(requestReader.getBody()).isEqualTo("Hello World");
   }
 }
+
 
 

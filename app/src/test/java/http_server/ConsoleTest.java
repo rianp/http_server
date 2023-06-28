@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConsoleTest {
   Console console = new Console();
@@ -37,9 +36,8 @@ public class ConsoleTest {
     console.print("Print");
 
     String output = outputStream.toString().trim();
-    assertThat(output, equalTo("Print"));
+    assertThat(output).isEqualTo("Print");
   }
-
 
   @Test
   @DisplayName("should return a string that matches the string entered by the user")
@@ -50,6 +48,7 @@ public class ConsoleTest {
 
     String input = console.inputString("Enter input: ");
 
-    assertThat(input, equalTo(expectedInput));
+    assertThat(input).isEqualTo(expectedInput);
   }
 }
+

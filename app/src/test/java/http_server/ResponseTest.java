@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResponseTest {
 
@@ -19,8 +18,8 @@ public class ResponseTest {
 
   @Test
   public void defaultConstructor_ShouldInitializeEmptyResponse() {
-    assertThat(response.getResponseHeaders(), anEmptyMap());
-    assertThat(response.getResponseBody(), isEmptyString());
+    assertThat(response.getResponseHeaders()).isEmpty();
+    assertThat(response.getResponseBody()).isEmpty();
   }
 
   @Test
@@ -30,8 +29,8 @@ public class ResponseTest {
 
     Map<String, String> headers = response.getResponseHeaders();
 
-    assertThat(headers, hasEntry("Content-Type", "application/json"));
-    assertThat(headers, hasEntry("Cache-Control", "no-cache"));
+    assertThat(headers).containsEntry("Content-Type", "application/json");
+    assertThat(headers).containsEntry("Cache-Control", "no-cache");
   }
 
   @Test
@@ -39,7 +38,7 @@ public class ResponseTest {
     String body = "This is the response body";
     response.setResponseBody(body);
 
-    assertThat(response.getResponseBody(), equalTo(body));
+    assertThat(response.getResponseBody()).isEqualTo(body);
   }
 
   @Test
@@ -47,7 +46,7 @@ public class ResponseTest {
     response.setResponseBody("Initial body");
     response.setResponseBody("Updated body");
 
-    assertThat(response.getResponseBody(), equalTo("Updated body"));
+    assertThat(response.getResponseBody()).isEqualTo("Updated body");
   }
 }
 

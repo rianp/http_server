@@ -5,8 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 public class ResponseBuilderTest {
@@ -30,8 +29,8 @@ public class ResponseBuilderTest {
 
     Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
-    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+    assertThat(response.getResponseBody()).isEqualTo(expectedResult.getResponseBody());
+    assertThat(response.getResponseHeaders()).isEqualTo(expectedResult.getResponseHeaders());
   }
 
   @Test
@@ -46,8 +45,8 @@ public class ResponseBuilderTest {
 
     Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
-    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+    assertThat(response.getResponseBody()).isEqualTo(expectedResult.getResponseBody());
+    assertThat(response.getResponseHeaders()).isEqualTo(expectedResult.getResponseHeaders());
   }
 
   @Test
@@ -62,8 +61,8 @@ public class ResponseBuilderTest {
 
     Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
-    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+    assertThat(response.getResponseBody()).isEqualTo(expectedResult.getResponseBody());
+    assertThat(response.getResponseHeaders()).isEqualTo(expectedResult.getResponseHeaders());
   }
 
   @Test
@@ -78,8 +77,8 @@ public class ResponseBuilderTest {
 
     Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
-    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+    assertThat(response.getResponseBody()).isEqualTo(expectedResult.getResponseBody());
+    assertThat(response.getResponseHeaders()).isEqualTo(expectedResult.getResponseHeaders());
   }
 
   @Test
@@ -93,10 +92,11 @@ public class ResponseBuilderTest {
 
     Response response = responseBuilder.buildResponse(request);
 
-    assertThat(response.getResponseBody(), is(equalTo(expectedResult.getResponseBody())));
-    assertThat(response.getResponseHeaders(), is(equalTo(expectedResult.getResponseHeaders())));
+    assertThat(response.getResponseBody()).isEqualTo(expectedResult.getResponseBody());
+    assertThat(response.getResponseHeaders()).isEqualTo(expectedResult.getResponseHeaders());
   }
 }
+
 
 
 
