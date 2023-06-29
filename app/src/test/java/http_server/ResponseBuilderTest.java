@@ -26,7 +26,7 @@ public class ResponseBuilderTest {
     when(request.getMethod()).thenReturn("GET");
 
     Response expectedResult = new Response();
-    expectedResult.setResponseBody("Hello world!");
+    expectedResult.setResponseBody("Hello world");
 
     Response response = responseBuilder.buildResponse(request);
 

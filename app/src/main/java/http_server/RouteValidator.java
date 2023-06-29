@@ -13,10 +13,11 @@ public class RouteValidator {
 
     routes.put("/simple_get_with_body", List.of("GET", "HEAD", "OPTIONS"));
     routes.put("/simple_get", List.of("GET", "HEAD", "OPTIONS"));
-    routes.put("/echo_post", List.of("POST"));
+    routes.put("/echo_body", List.of("POST"));
     routes.put("/head_request", List.of("HEAD", "GET"));
     routes.put("/method_options", List.of("OPTIONS"));
     routes.put("/method_options2", List.of("OPTIONS"));
+    routes.put("/redirect", List.of("GET"));
   }
 
   public boolean hasMethod(String key, String value) {
@@ -25,5 +26,9 @@ public class RouteValidator {
       return values.contains(value);
     }
     return false;
+  }
+
+  public boolean hasPath(String key) {
+    return routes.containsKey(key);
   }
 }
