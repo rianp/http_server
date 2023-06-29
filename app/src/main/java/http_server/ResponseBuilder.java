@@ -4,8 +4,8 @@ public class ResponseBuilder {
   private final ResponseHandler handler;
   private final RouteValidator routeValidator;
 
-  public ResponseBuilder(ResponseHandler requestHandler, RouteValidator routeValidator) {
-    this.handler = requestHandler;
+  public ResponseBuilder(ResponseHandler responseHandler, RouteValidator routeValidator) {
+    this.handler = responseHandler;
     this.routeValidator = routeValidator;
   }
 
@@ -24,25 +24,25 @@ public class ResponseBuilder {
     if (path != null && method != null) {
       switch (path) {
         case "/simple_get_with_body" -> {
-          return buildSimpleGetWithBodyResponse(method);
+          return handleSimpleGetWithBodyResponse(method);
         }
         case "/simple_get" -> {
-          return buildSimpleGetResponse(method);
+          return handleSimpleGetResponse(method);
         }
         case "/echo_body" -> {
-          return buildEchoBodyResponse(method, request.getBody());
+          return handleEchoBodyResponse(method, request.getBody());
         }
         case "/head_request" -> {
-          return buildHeadRequestResponse(method);
+          return handleHeadRequestResponse(method);
         }
         case "/method_options" -> {
-          return buildMethodOptionsResponse(method, "GET, HEAD, OPTIONS");
+          return handleMethodOptionsResponse(method, "GET, HEAD, OPTIONS");
         }
         case "/method_options2" -> {
-          return buildMethodOptionsResponse(method, "GET, HEAD, OPTIONS, PUT, POST");
+          return handleMethodOptionsResponse(method, "GET, HEAD, OPTIONS, PUT, POST");
         }
         case "/redirect" -> {
-          return buildRedirectResponse(method);
+          return handleRedirectResponse(method);
         }
         default -> {
         }
@@ -52,7 +52,7 @@ public class ResponseBuilder {
     return handler.buildUnexpectedResponse("405");
   }
 
-  private Response buildSimpleGetWithBodyResponse(String method) {
+  private Response handleSimpleGetWithBodyResponse(String method) {
     if (method.equals("HEAD")) {
       return handler.buildHeadResponse("200");
     } else {
@@ -60,7 +60,7 @@ public class ResponseBuilder {
     }
   }
 
-  private Response buildSimpleGetResponse(String method) {
+  private Response handleSimpleGetResponse(String method) {
     if (method.equals("HEAD")) {
       return handler.buildHeadResponse("200");
     } else {
@@ -68,14 +68,14 @@ public class ResponseBuilder {
     }
   }
 
-  private Response buildEchoBodyResponse(String method, String body) {
+  private Response handleEchoBodyResponse(String method, String body) {
     if (method.equals("POST") && body != null) {
       return handler.buildResponse("200", body);
     }
     return handler.buildUnexpectedResponse("405");
   }
 
-  private Response buildHeadRequestResponse(String method) {
+  private Response handleHeadRequestResponse(String method) {
     if (method.equals("HEAD")) {
       return handler.buildHeadResponse("200");
     } else {
@@ -83,14 +83,14 @@ public class ResponseBuilder {
     }
   }
 
-  private Response buildMethodOptionsResponse(String method, String allowedMethods) {
+  private Response handleMethodOptionsResponse(String method, String allowedMethods) {
     if (method.equals("OPTIONS")) {
       return handler.buildMethodOptionsResponse("allow", allowedMethods, "200");
     }
     return handler.buildUnexpectedResponse("405");
   }
 
-  private Response buildRedirectResponse(String method) {
+  private Response handleRedirectResponse(String method) {
     if (method.equals("GET")) {
       return handler.buildRedirectResponse("location", "http://127.0.0.1:8080/simple_get", "301");
     }
