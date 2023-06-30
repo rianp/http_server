@@ -6,7 +6,7 @@ public class ResponseFormatter {
 
   public String format(Response response) {
     StringBuilder responseBuilder = new StringBuilder();
-    responseBuilder.append("HTTP/1.1 " + response.getResponseStatus() + " OK\r\n");
+    responseBuilder.append("HTTP/1.1 " + response.getResponseStatus() + "\r\n");
 
     for (Map.Entry<String, String> entry : response.getResponseHeaders().entrySet()) {
       responseBuilder
