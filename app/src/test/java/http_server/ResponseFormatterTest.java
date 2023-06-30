@@ -21,6 +21,7 @@ public class ResponseFormatterTest {
     responseHeaders.put("Server", "Test Server");
 
     when(response.getResponseHeaders()).thenReturn(responseHeaders);
+    when(response.getResponseStatus()).thenReturn("200");
     when(response.getResponseBody()).thenReturn("Hello, world!");
 
     ResponseFormatter responseFormatter = new ResponseFormatter();

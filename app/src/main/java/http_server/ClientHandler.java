@@ -19,6 +19,7 @@ public class ClientHandler implements Runnable {
     try {
       RequestReader httpRequest = new RequestReader(socketIO);
       httpRequest.readRequest();
+
       Response response = responseBuilder.buildResponse(httpRequest);
       ResponseFormatter responseFormatter = new ResponseFormatter();
       socketIO.sendMessage(responseFormatter.format(response));
