@@ -11,7 +11,9 @@ public class App {
 
         ResponseHandler requestHandler = new ResponseHandler();
         RouteValidator routeValidator = new RouteValidator();
-        ResponseBuilder responseBuilder = new ResponseBuilder(requestHandler, routeValidator);
+        FileCreator fileCreator = new FileCreator();
+        ResponseBuilder responseBuilder = new ResponseBuilder(requestHandler, routeValidator, fileCreator);
+
       
         int port = 8080;
 

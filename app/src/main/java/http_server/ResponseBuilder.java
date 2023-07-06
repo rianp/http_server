@@ -1,15 +1,20 @@
 package http_server;
+
+import java.io.IOException;
+
 public class ResponseBuilder {
 
   private final ResponseHandler handler;
   private final RouteValidator routeValidator;
+  private final FileCreator fileCreator;
 
-  public ResponseBuilder(ResponseHandler responseHandler, RouteValidator routeValidator) {
+  public ResponseBuilder(ResponseHandler responseHandler, RouteValidator routeValidator, FileCreator fileCreator) {
     this.handler = responseHandler;
     this.routeValidator = routeValidator;
+    this.fileCreator = fileCreator;
   }
 
-  public Response buildResponse(RequestReader request) {
+  public Response buildResponse(RequestReader request) throws IOException {
     String path = request.getPath();
     String method = request.getMethod();
 
@@ -43,6 +48,9 @@ public class ResponseBuilder {
         }
         case "/redirect" -> {
           return handleRedirectResponse(method);
+        }
+        case "/todo" -> {
+          return handleCreateResourceResponse(method, request.getBody());
         }
         default -> {
         }
@@ -96,6 +104,17 @@ public class ResponseBuilder {
     }
     return handler.buildUnexpectedResponse("405 Method Not Allowed");
   }
+
+  Response handleCreateResourceResponse(String method, String body) throws IOException {
+
+    if (method.equals("POST") && body != null) {
+      fileCreator.createFile(body);
+
+      return handler.buildResourceResponse("Content-Type", "application/json;charset=utf-8", "201 Created", body);
+    }
+    return handler.buildUnexpectedResponse("405 Method Not Allowed");
+  }
+
 }
 
 
