@@ -1,6 +1,7 @@
 @create-todo @04-todo-list
 Feature: Create To-Do
 
+  @implemented
   Scenario: Successfully creating a to-do task
     Given I make a valid POST request to create a to-do task
     Then my response should have status code 201

@@ -35,4 +35,5 @@ public class Response {
   public void setResponseBody(String body) {
     responseBody = body;
   }
+
 }

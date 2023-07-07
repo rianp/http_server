@@ -1,5 +1,7 @@
 package http_server;
 
+import java.util.Map;
+
 public class ResponseHandler {
   Response response = new Response();
 
@@ -9,6 +11,12 @@ public class ResponseHandler {
     return response;
   }
 
+  public Response buildResourceResponse(String method, String options, String status, String responseBody) {
+    response.setResponseStatus(status);
+    response.setResponseHeaders(method, options);
+    response.setResponseBody(responseBody);
+    return response;
+  }
 
   public Response buildHeadResponse(String status) {
     response.setResponseStatus(status);

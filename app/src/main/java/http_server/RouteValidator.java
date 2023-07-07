@@ -18,6 +18,7 @@ public class RouteValidator {
     routes.put("/method_options", List.of("OPTIONS"));
     routes.put("/method_options2", List.of("OPTIONS"));
     routes.put("/redirect", List.of("GET"));
+    routes.put("/todo", List.of("POST"));
   }
 
   public boolean hasMethod(String key, String value) {
